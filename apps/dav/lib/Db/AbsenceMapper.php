@@ -56,7 +56,7 @@ class AbsenceMapper extends QBMapper {
 		try {
 			return $this->findEntity($qb);
 		} catch (MultipleObjectsReturnedException $e) {
-			// Won't happen as there is a unique index on user_id
+			// Won't happen as id is the primary key
 			throw new \RuntimeException(
 				'The impossible has happened! The query returned multiple absence settings for one user.',
 				0,

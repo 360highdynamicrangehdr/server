@@ -32,7 +32,6 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\QueuedJob;
 use OCP\EventDispatcher\IEventDispatcher;
-use OCP\IUser;
 use OCP\IUserManager;
 use OCP\User\Events\OutOfOfficeEndedEvent;
 use OCP\User\Events\OutOfOfficeStartedEvent;
@@ -40,9 +39,6 @@ use OCP\User\Events\OutOfOfficeStartedEvent;
 class OutOfOfficeEventDispatcherJob extends QueuedJob {
 	public const EVENT_START = 'start';
 	public const EVENT_END = 'end';
-
-	/** @var array<string, IUser> $users */
-	private array $userCache = [];
 
 	public function __construct(
 		ITimeFactory $time,
@@ -69,7 +65,7 @@ class OutOfOfficeEventDispatcherJob extends QueuedJob {
 		}
 
 		$userId = $absence->getUserId();
-		$user = $this->getUser($userId);
+		$user = $this->userManager->get($userId);
 		if ($user === null) {
 			$this->logger->error("Failed to dispatch out-of-office event: User $userId does not exist", [
 				'argument' => $argument,
@@ -87,19 +83,5 @@ class OutOfOfficeEventDispatcherJob extends QueuedJob {
 				'argument' => $argument,
 			]);
 		}
-	}
-
-	private function getUser(string $userId): ?IUser {
-		if (isset($this->userCache[$userId])) {
-			return $this->userCache[$userId];
-		}
-
-		$user = $this->userManager->get($userId);
-		if ($user === null) {
-			return null;
-		}
-
-		$this->userCache[$userId] = $user;
-		return $user;
 	}
 }
