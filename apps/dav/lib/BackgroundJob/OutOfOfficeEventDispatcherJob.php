@@ -27,7 +27,6 @@ declare(strict_types=1);
 namespace OCA\DAV\BackgroundJob;
 
 use OCA\DAV\Db\AbsenceMapper;
-use OCA\Mail\Vendor\Psr\Log\LoggerInterface;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\QueuedJob;
@@ -35,6 +34,7 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IUserManager;
 use OCP\User\Events\OutOfOfficeEndedEvent;
 use OCP\User\Events\OutOfOfficeStartedEvent;
+use Psr\Log\LoggerInterface;
 
 class OutOfOfficeEventDispatcherJob extends QueuedJob {
 	public const EVENT_START = 'start';
