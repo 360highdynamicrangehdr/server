@@ -229,7 +229,6 @@ describe('OC.SetupChecks tests', function() {
 					hasPassedCodeIntegrityCheck: true,
 					OpcacheSetupRecommendations: [],
 					isSettimelimitAvailable: true,
-					missingPrimaryKeys: [],
 					cronErrors: [],
 					cronInfo: {
 						diffInSeconds: 0
