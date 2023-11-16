@@ -170,7 +170,6 @@ class CheckSetupControllerTest extends TestCase {
 				'getAppDirsWithDifferentOwner',
 				'isImagickEnabled',
 				'areWebauthnExtensionsEnabled',
-				'hasBigIntConversionPendingColumns',
 				'isMysqlUsedWithoutUTF8MB4',
 				'isEnoughTempSpaceAvailableIfS3PrimaryStorageIsUsed',
 			])->getMock();
@@ -248,11 +247,6 @@ class CheckSetupControllerTest extends TestCase {
 			->expects($this->once())
 			->method('areWebauthnExtensionsEnabled')
 			->willReturn(false);
-
-		$this->checkSetupController
-			->expects($this->once())
-			->method('hasBigIntConversionPendingColumns')
-			->willReturn([]);
 
 		$this->checkSetupController
 			->expects($this->once())
