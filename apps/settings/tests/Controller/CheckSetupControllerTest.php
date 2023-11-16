@@ -34,7 +34,6 @@
  */
 namespace OCA\Settings\Tests\Controller;
 
-use bantu\IniGetWrapper\IniGetWrapper;
 use OC;
 use OC\IntegrityCheck\Checker;
 use OCA\Settings\Controller\CheckSetupController;
@@ -89,8 +88,6 @@ class CheckSetupControllerTest extends TestCase {
 	private $lockingProvider;
 	/** @var IDateTimeFormatter|\PHPUnit\Framework\MockObject\MockObject */
 	private $dateTimeFormatter;
-	/** @var IniGetWrapper|\PHPUnit\Framework\MockObject\MockObject */
-	private $iniGetWrapper;
 	/** @var ITempManager|\PHPUnit\Framework\MockObject\MockObject */
 	private $tempManager;
 	/** @var IManager|\PHPUnit\Framework\MockObject\MockObject */
@@ -133,7 +130,6 @@ class CheckSetupControllerTest extends TestCase {
 		$this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
 		$this->lockingProvider = $this->getMockBuilder(ILockingProvider::class)->getMock();
 		$this->dateTimeFormatter = $this->getMockBuilder(IDateTimeFormatter::class)->getMock();
-		$this->iniGetWrapper = $this->getMockBuilder(IniGetWrapper::class)->getMock();
 		$this->tempManager = $this->getMockBuilder(ITempManager::class)->getMock();
 		$this->notificationManager = $this->getMockBuilder(IManager::class)->getMock();
 		$this->appManager = $this->createMock(IAppManager::class);
@@ -152,7 +148,6 @@ class CheckSetupControllerTest extends TestCase {
 				$this->dispatcher,
 				$this->lockingProvider,
 				$this->dateTimeFormatter,
-				$this->iniGetWrapper,
 				$this->tempManager,
 				$this->notificationManager,
 				$this->appManager,
@@ -164,7 +159,6 @@ class CheckSetupControllerTest extends TestCase {
 				'getSuggestedOverwriteCliURL',
 				'getCurlVersion',
 				'isPhpOutdated',
-				'getOpcacheSetupRecommendations',
 				'isPHPMailerUsed',
 				'getAppDirsWithDifferentOwner',
 				'isImagickEnabled',
@@ -209,10 +203,6 @@ class CheckSetupControllerTest extends TestCase {
 			->method('getHeader');
 		$this->clientService->expects($this->never())
 			->method('newClient');
-		$this->checkSetupController
-			->expects($this->once())
-			->method('getOpcacheSetupRecommendations')
-			->willReturn(['recommendation1', 'recommendation2']);
 		$this->checkSetupController
 			->expects($this->once())
 			->method('getSuggestedOverwriteCliURL')
@@ -305,7 +295,6 @@ class CheckSetupControllerTest extends TestCase {
 				'isCorrectMemcachedPHPModuleInstalled' => true,
 				'hasPassedCodeIntegrityCheck' => true,
 				'codeIntegrityCheckerDocumentation' => 'http://docs.example.org/server/go.php?to=admin-code-integrity',
-				'OpcacheSetupRecommendations' => ['recommendation1', 'recommendation2'],
 				'isSettimelimitAvailable' => true,
 				'appDirsWithDifferentOwner' => [],
 				'isImagickEnabled' => false,
@@ -336,7 +325,6 @@ class CheckSetupControllerTest extends TestCase {
 				$this->dispatcher,
 				$this->lockingProvider,
 				$this->dateTimeFormatter,
-				$this->iniGetWrapper,
 				$this->tempManager,
 				$this->notificationManager,
 				$this->appManager,
@@ -1060,7 +1048,6 @@ Array
 			$this->dispatcher,
 			$this->lockingProvider,
 			$this->dateTimeFormatter,
-			$this->iniGetWrapper,
 			$this->tempManager,
 			$this->notificationManager,
 			$this->appManager,
@@ -1111,7 +1098,6 @@ Array
 			$this->dispatcher,
 			$this->lockingProvider,
 			$this->dateTimeFormatter,
-			$this->iniGetWrapper,
 			$this->tempManager,
 			$this->notificationManager,
 			$this->appManager,
