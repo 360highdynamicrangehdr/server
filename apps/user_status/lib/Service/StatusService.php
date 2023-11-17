@@ -149,7 +149,7 @@ class StatusService {
 		// We found no status from the calendar
 		if ($calendarStatus === null) {
 			// If calendar status was set previously, it is time to revert now
-			if ($userStatus?->getMessageId() === IUserStatus::MESSAGE_CALENDAR_BUSY) {
+			if ($userStatus->getMessageId() === IUserStatus::MESSAGE_CALENDAR_BUSY) {
 				$this->revertUserStatus($userId, IUserStatus::MESSAGE_CALENDAR_BUSY);
 			}
 			return $this->processStatus($userStatus);
