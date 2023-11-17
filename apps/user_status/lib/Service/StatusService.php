@@ -74,7 +74,6 @@ class StatusService {
 	 */
 	public const PERSISTENT_STATUSES = [
 		IUserStatus::AWAY,
-		IUserStatus::BUSY,
 		IUserStatus::DND,
 		IUserStatus::INVISIBLE,
 	];
@@ -147,8 +146,12 @@ class StatusService {
 		}
 
 		$calendarStatus = $this->getCalendarStatus($userId);
-		// We found no status from the calendar, proceed with the existing status
-		if($calendarStatus === null) {
+		// We found no status from the calendar
+		if ($calendarStatus === null) {
+			// If calendar status was set previously, it is time to revert now
+			if ($userStatus?->getMessageId() === IUserStatus::MESSAGE_CALENDAR_BUSY) {
+				$this->revertUserStatus($userId, IUserStatus::MESSAGE_CALENDAR_BUSY);
+			}
 			return $this->processStatus($userStatus);
 		}
 
@@ -164,7 +167,7 @@ class StatusService {
 		// If the new status is null, there's already an identical status in place
 		$newUserStatus = $this->setUserStatus($userId,
 			$calendarStatus->getStatus(),
-			$calendarStatus->getMessage() ?? IUserStatus::MESSAGE_AVAILABILITY,
+			$calendarStatus->getMessageId(),
 			true,
 			$calendarStatus->getCustomMessage() ?? '');
 
