@@ -23,46 +23,47 @@ declare(strict_types=1);
  *
  */
 
-namespace OCP\FilesMetadata;
+namespace OCP\FilesMetadata\Event;
 
-use OCP\EventDispatcher\Event;
 use OCP\Files\Node;
+use OCP\FilesMetadata\AMetadataEvent;
 use OCP\FilesMetadata\Model\IFilesMetadata;
 
 /**
+ * MetadataNamedEvent is an event similar to MetadataBackgroundEvent completed with a target name,
+ * used to identify the designed app to refresh file's metadata.
+ * Meaning that when using this event, your app should implement a filter on the event's registered name
+ *
+ * @see AMetadataEvent::getMetadata()
+ * @see AMetadataEvent::getNode()
+ * @see MetadataNamedEvent::getName()
  * @since 28.0.0
  */
-abstract class AMetadataEvent extends Event {
+class MetadataNamedEvent extends AMetadataEvent {
 	/**
 	 * @param Node $node
 	 * @param IFilesMetadata $metadata
+	 * @param string $name name assigned to the event
+	 *
 	 * @since 28.0.0
 	 */
 	public function __construct(
-		protected Node $node,
-		protected IFilesMetadata $metadata
+		Node $node,
+		IFilesMetadata $metadata,
+		private string $name = ''
 	) {
-		parent::__construct();
+		parent::__construct($node, $metadata);
 	}
 
 	/**
-	 * returns related node
+	 * get the assigned name for the event.
+	 * This is used to know if your app is the called one when running the
+	 *    ./occ files:scan --generate-metadata [name]
 	 *
-	 * @return Node
+	 * @return string
 	 * @since 28.0.0
 	 */
-	public function getNode(): Node {
-		return $this->node;
-	}
-
-	/**
-	 * returns metadata. if known, it already contains data from the database.
-	 * If the object is modified using its setters, changes are stored in database at the end of the event.
-	 *
-	 * @return IFilesMetadata
-	 * @since 28.0.0
-	 */
-	public function getMetadata(): IFilesMetadata {
-		return $this->metadata;
+	public function getName(): string {
+		return $this->name;
 	}
 }
