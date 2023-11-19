@@ -48,6 +48,7 @@ class PhotoCache {
 		'image/png' => 'png',
 		'image/jpeg' => 'jpg',
 		'image/gif' => 'gif',
+	    'image/x-exr' => 'exr',
 		'image/vnd.microsoft.icon' => 'ico',
 	];
 
