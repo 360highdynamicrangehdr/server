@@ -61,6 +61,8 @@ class AvatarNode extends File {
 		ob_start();
 		if ($this->ext === 'png') {
 			imagepng($res);
+		} elseif ($this->ext === 'exr') {
+			imageexr($res);
 		} else {
 			imagejpeg($res);
 		}
@@ -78,6 +80,8 @@ class AvatarNode extends File {
 	public function getContentType() {
 		if ($this->ext === 'png') {
 			return 'image/png';
+		} elseif ($this->ext === 'exr') {
+			return 'image/exr';
 		}
 		return 'image/jpeg';
 	}
