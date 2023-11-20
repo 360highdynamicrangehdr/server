@@ -1282,6 +1282,7 @@ $CONFIG = [
  *
  * Defaults to the following providers:
  *
+ *  - ``OC\Preview\EXR``
  *  - ``OC\Preview\BMP``
  *  - ``OC\Preview\GIF``
  *  - ``OC\Preview\JPEG``
@@ -1294,6 +1295,7 @@ $CONFIG = [
  *  - ``OC\Preview\XBitmap``
  */
 'enabledPreviewProviders' => [
+	'OC\Preview\EXR',
 	'OC\Preview\BMP',
 	'OC\Preview\GIF',
 	'OC\Preview\JPEG',
