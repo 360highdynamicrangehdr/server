@@ -446,6 +446,13 @@ trait WebDav {
 			<d:prop>
 				<d:getcontenttype/>
 			</d:prop>
+			<d:literal>image/x-exr</d:literal>
+		</d:eq>
+ 
+		<d:eq>
+			<d:prop>
+				<d:getcontenttype/>
+			</d:prop>
 			<d:literal>image/png</d:literal>
 		</d:eq>
 	
