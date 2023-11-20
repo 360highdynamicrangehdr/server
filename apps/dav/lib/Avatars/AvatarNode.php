@@ -81,7 +81,7 @@ class AvatarNode extends File {
 		if ($this->ext === 'png') {
 			return 'image/png';
 		} elseif ($this->ext === 'exr') {
-			return 'image/exr';
+			return 'image/x-exr';
 		}
 		return 'image/jpeg';
 	}
