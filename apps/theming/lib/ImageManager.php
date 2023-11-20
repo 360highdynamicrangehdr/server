@@ -253,6 +253,9 @@ class ImageManager {
 				if (str_contains($detectedMimeType, 'image/jpeg')) {
 					if (!imagejpeg($outputImage, $newTmpFile, 90)) {
 						throw new \Exception('Could not recompress background image as JPEG');
+					} else if (str_contains($detectedMimeType, 'image/x-exr')) {
+					if (!imageexr($outputImage, $newTmpFile, 90)) {
+						throw new \Exception('Could not recompress background image as OPENEXR');
 					}
 				} else {
 					if (!imagepng($outputImage, $newTmpFile, 8)) {
