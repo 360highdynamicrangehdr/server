@@ -142,7 +142,7 @@ export default {
 		return {
 			showLoading: false,
 			acceptMime: (allowedMimeTypes[this.name]
-				|| ['image/jpeg', 'image/png', 'image/gif', 'image/webp']).join(','),
+				|| ['image/x-exr', 'image/jpeg', 'image/png', 'image/gif', 'image/webp']).join(','),
 		}
 	},
 
